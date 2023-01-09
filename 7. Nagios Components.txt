@@ -1,0 +1,67 @@
+Nagios components
+
+cd /usr/local/nagios/etc/objects/
+
+ubuntu@ip-172-31-26-63:/usr/local/nagios/etc/objects$ ls
+
+commands.cfg  
+contacts.cfg 
+localhost.cfg  
+printer.cfg  
+switch.cfg 
+templates.cfg 
+timeperiods.cfg  
+windows.cfg
+
+ubuntu@ip-172-31-26-63:/usr/local/nagios/etc/objects$ sudo nano commands.cfg
+
+ubuntu@ip-172-31-26-63:/usr/local/nagios/etc/objects$ sudo nano localhost.cfg
+
+define service {
+
+    use                     local-service           ; Name of service template to use
+    host_name               localhost
+    service_description     Current Users
+    check_command           check_local_users!20!50
+}
+
+
+Rename the current users 12 & Restart the nagios service
+
+
+sudo systemctl restart nagios
+
+ubuntu@ip-172-31-26-63:/usr/local/nagios/etc/objects$ sudo systemctl restart nagios
+
+ubuntu@ip-172-31-26-63:/usr/local/nagios/etc/objects$ cd ..
+
+ubuntu@ip-172-31-26-63:/usr/local/nagios/etc$ ls
+
+cgi.cfg  htpasswd.users  nagios.cfg  objects  resource.cfg
+
+ubuntu@ip-172-31-26-63:/usr/local/nagios/etc$ sudo nano nagios.cfg
+
+// Open the file & uncomment Windows.cfg file (it will display on nagios)
+
+Check the Nagios console 
+HOST - HOST GROUP - SERVICE
+
+ubuntu@ip-172-31-26-63:/usr/local/nagios/etc$ cd objects/
+
+ubuntu@ip-172-31-26-63:/usr/local/nagios/etc/objects$ sudo nano contacts.cfg
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

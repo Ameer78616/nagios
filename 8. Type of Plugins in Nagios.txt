@@ -1,0 +1,6 @@
+Type of Plugins in Nagios
+
+NRPE - Linux
+
+NSClient++ - Windows 
+

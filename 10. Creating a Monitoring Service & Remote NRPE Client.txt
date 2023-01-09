@@ -1,0 +1,134 @@
+10. Creating a Monitoring Service 
+
+
+On Slave
+
+sudo apt-get install apache2 -y
+
+On Master
+
+/usr/local/nagios/etc/objects$ sudo nano localhost.cfg 
+
+Copy the Service Definitions
+
+
+define service {
+
+    use                     local-service           ; Name of service template to use
+    host_name               localhost
+    service_description     PING
+    check_command           check_ping!100.0,20%!500.0,60%
+}
+
+
+Goto host1.cfg 
+
+sudo nano host1.cfg
+
+define service {
+
+    use                     generic-service           ; Name of service template to use
+    host_name               slave1
+    service_description     Check Apache
+    check_command           Check_http
+}
+
+sudo systemctl restart nagios
+
+Check the Nagios console in Service 
+
+Stop Apache in Slave1 
+
+sudo service apache2 stop  		// You apache Will stop 
+
+=========================================================================================
+
+Creating A Monitoring Service Nagios for remote NRPE Client
+
+sudo nano commands.cfg
+
+Add New line 
+
+define command {
+
+    command_name    test_http
+    command_line    $USER1$/check_http -I $HOSTADDRESS$ $ARG1$
+}
+
+
+Save the File
+
+sudo nano host1.cfg
+
+
+
+define service {
+
+    use                     generic-service           ; Name of service template to use
+    host_name               slave1
+    service_description     Check Apache Test
+    check_command           test_http
+}
+
+define service {
+
+    use                     generic-service           ; Name of service template to use
+    host_name               slave1
+    service_description     Check Apache
+    check_command           Check_http
+}
+
+Save the File
+
+sudo nano templates.cfg
+
+Copy the Service template 
+
+
+
+sudo nano host1.cfg
+
+
+
+define service {
+
+    use                     generic-service           ; Name of service template to use
+    host_name               slave1
+    service_description     Check Apache Test
+    check_command           test_http
+    retry_interval           1
+    check_interval           1
+}
+
+define service {
+
+    use                     generic-service           ; Name of service template to use
+    host_name               slave1
+    service_description     Check Apache
+    check_command           Check_http
+}
+
+
+Save & Restart 
+
+sudo systemctl restart nagios
+
+
+On Slave
+
+Stop Apache Service 
+
+sudo service apache2 status
+
+sudo service apache2 stop
+
+
+
+
+
+
+
+
+
+
+
